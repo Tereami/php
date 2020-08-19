@@ -1,9 +1,41 @@
-.calc-row {
-    height: 100vh;
+.grid-container {
+    width: 300px;
+    display: grid;
+    row-gap: 10px;
+    column-gap: 10px;
+    grid-template-rows: 2fr 1.5fr repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     font-family: 'Share Tech Mono', monospace;
+    background-color: darkgray;
+    padding: 5px;
 }
 
-.input-window {
+#btn_0 {
+    grid-column: 1 / 3;
+}
+
+#btn_calc {
+    grid-column: 4 / 6;
+}
+
+#previousWindow {
+    grid-column: 1 / 6;
+    text-align: end;
+    resize: none;
+    font-size: x-small;
+    height: auto;
+    display:inline-block;
+    vertical-align:top;
+}
+
+#memoryWindow {
+    grid-column: 1 / 2;
+    text-align: center;
+    font-size: x-large;
+}
+
+#inputWindow {
+    grid-column: 2 / 6;
     text-align: end;
     font-size: x-large;
 }
