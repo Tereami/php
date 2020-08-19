@@ -4,7 +4,7 @@ let memory = 0;
 
 const inputWindow = document.getElementById('inputWindow');
 const memoryWindow = document.getElementById('memoryWindow');
-
+const previousWindow = document.getElementById('previousWindow');
 
 document.getElementById('btn_sum').addEventListener('click', function () {
     lastOperand = parseFloat(inputWindow.value);
@@ -33,23 +33,35 @@ document.getElementById('btn_divide').addEventListener('click', function () {
 document.getElementById('btn_calc').addEventListener('click', function () {
     if(operation == 'sum') {
         const secondOperand = parseFloat(inputWindow.value);
-        inputWindow.value = lastOperand + secondOperand;
-        lastOperand = secondOperand;
+        const result = lastOperand + secondOperand;
+        inputWindow.value = result;
+        previousWindow.value += "\n" + lastOperand + " + " + secondOperand + " = " + result;
+        previousWindow.scrollTop = previousWindow.scrollHeight;
+        lastOperand = secondOperand; 
     }
     if(operation == 'minus') {
         const secondOperand = parseFloat(inputWindow.value);
-        inputWindow.value = lastOperand - secondOperand;
-        lastOperand = secondOperand;
+        const result = lastOperand - secondOperand;
+        inputWindow.value = result;
+        previousWindow.value += "\n" + lastOperand + " - " + secondOperand + " = " + result;
+        previousWindow.scrollTop = previousWindow.scrollHeight;
+        lastOperand = secondOperand; 
     }
     if(operation == 'miltiply') {
         const secondOperand = parseFloat(inputWindow.value);
-        inputWindow.value = lastOperand * secondOperand;
-        lastOperand = secondOperand;
+        const result = lastOperand * secondOperand;
+        inputWindow.value = result;
+        previousWindow.value += "\n" + lastOperand + " * " + secondOperand + " = " + result;
+        previousWindow.scrollTop = previousWindow.scrollHeight;
+        lastOperand = secondOperand; 
     }
     if(operation == 'divide') {
         const secondOperand = parseFloat(inputWindow.value);
-        inputWindow.value = lastOperand / secondOperand;
-        lastOperand = secondOperand;
+        const result = lastOperand / secondOperand;
+        inputWindow.value = result;
+        previousWindow.value += "\n" + lastOperand + " / " + secondOperand + " = " + result;
+        previousWindow.scrollTop = previousWindow.scrollHeight;
+        lastOperand = secondOperand; 
     }
 })
 

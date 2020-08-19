@@ -13,7 +13,7 @@
             display: grid;
             row-gap: 10px;
             column-gap: 10px;
-            grid-template-rows: 1.5fr repeat(6, 1fr);
+            grid-template-rows: 2fr 1.5fr repeat(6, 1fr);
             grid-template-columns: repeat(5, 1fr);
             font-family: 'Share Tech Mono', monospace;
             background-color: darkgray;
@@ -26,6 +26,16 @@
 
         #btn_calc {
             grid-column: 4 / 6;
+        }
+
+        #previousWindow {
+            grid-column: 1 / 6;
+            text-align: end;
+            resize: none;
+            font-size: x-small;
+            height: auto;
+            display:inline-block;
+            vertical-align:top;
         }
 
         #memoryWindow {
@@ -45,6 +55,7 @@
 <body>
 <center>
     <div class="grid-container">
+        <textarea class="form-control input-window" id="previousWindow" value=""></textarea>
         <input class="form-control input-window" id="memoryWindow" value="">
         <input class="form-control input-window" id="inputWindow" value="0">
 
