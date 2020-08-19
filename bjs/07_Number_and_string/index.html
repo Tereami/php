@@ -1,67 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Калькулятор</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <style>
+        .grid-container {
+            width: 300px;
+            display: grid;
+            row-gap: 10px;
+            column-gap: 10px;
+            grid-template-rows: 1.5fr repeat(6, 1fr);
+            grid-template-columns: repeat(5, 1fr);
+            font-family: 'Share Tech Mono', monospace;
+            background-color: darkgray;
+            padding: 5px;
+        }
+
+        #btn_0 {
+            grid-column: 1 / 3;
+        }
+
+        #btn_calc {
+            grid-column: 4 / 6;
+        }
+
+        #memoryWindow {
+            grid-column: 1 / 2;
+            text-align: center;
+            font-size: x-large;
+        }
+
+        #inputWindow {
+            grid-column: 2 / 6;
+            text-align: end;
+            font-size: x-large;
+        }
+    </style>
 </head>
+
 <body>
-<div class="container">
-    <div class="row calc-row align-items-center">
-        <div class="col col-md-4 offset-md-4">
-            <div class="form-group">
-                <div class="card" id="calc">
-                    <div class="card-body">
-                        <input class="form-control input-window" id="inputWindow" value="0">
-                        <div class="row no-gutters">
-                            <div class="col">
-                                <button class="btn btn-outline-danger form-control" id="btn_mc">MC</button>
-                                <button class="btn btn-outline-primary form-control" id="btn_backspace">←</button>
-                                <button class="btn btn-outline-secondary form-control" id="btn_7">7</button>
-                                <button class="btn btn-outline-secondary form-control" id="btn_4">4</button>
-                                <button class="btn btn-outline-secondary form-control" id="btn_1">1</button>
-                                <button class="btn btn-outline-secondary form-control" id="btn_0">0</button>
-                            </div>
-                            <div class="col">
-                                <button class="btn btn-outline-danger form-control" id="btn_mr">MR</button>
-                                <button class="btn btn-outline-primary form-control" id="btn_ce">CE</button>
-                                <button class="btn btn-outline-secondary form-control" id="btn_8">8</button>
-                                <button class="btn btn-outline-secondary form-control" id="btn_5">5</button>
-                                <button class="btn btn-outline-secondary form-control" id="btn_2">2</button>
-                            </div>
-                            <div class="col">
-                                <button class="btn btn-outline-danger form-control" id="btn_ms">MS</button>
-                                <button class="btn btn-outline-primary form-control" id="btn_clr">C</button>
-                                <button class="btn btn-outline-secondary form-control" id="btn_9">9</button>
-                                <button class="btn btn-outline-secondary form-control" id="btn_6">6</button>
-                                <button class="btn btn-outline-secondary form-control" id="btn_3">3</button>
-                                <button class="btn btn-outline-secondary form-control" id="btn_dot">.</button>
-                            </div>
-                            <div class="col">
-                                <button class="btn btn-outline-danger form-control" id="btn_mplus">M+</button>
-                                <button class="btn btn-outline-primary form-control" id="btn_plusminus">±</button>
-                                <button class="btn btn-outline-primary form-control" id="btn_divide">/</button>
-                                <button class="btn btn-outline-primary form-control" id="btn_multiply">*</button>
-                                <button class="btn btn-outline-primary form-control" id="btn_minus">-</button>
-                                <button class="btn btn-outline-primary form-control" id="btn_sum">+</button>
-                            </div>
-                            <div class="col">
-                                <button class="btn btn-outline-danger form-control" id="btn_mminus">M-</button>
-                                <button class="btn btn-outline-primary form-control" id="btn_sqrt">√</button>
-                                <button class="btn btn-outline-primary form-control" id="btn_percent">%</button>
-                                <button class="btn btn-outline-primary form-control" id="btn_revert">1/x</button>
-                                <button class="btn btn-outline-primary form-control" id="btn_calc">=</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<center>
+    <div class="grid-container">
+        <input class="form-control input-window" id="memoryWindow" value="">
+        <input class="form-control input-window" id="inputWindow" value="0">
+
+        <button class="btn btn-outline-danger form-control" id="btn_mc">MC</button>
+        <button class="btn btn-outline-danger form-control" id="btn_mr">MR</button>
+        <button class="btn btn-outline-danger form-control" id="btn_ms">MS</button>
+        <button class="btn btn-outline-danger form-control" id="btn_mplus">M+</button>
+        <button class="btn btn-outline-danger form-control" id="btn_mminus">M-</button>
+
+        <button class="btn btn-outline-primary form-control" id="btn_backspace">←</button>
+        <button class="btn btn-danger form-control" id="btn_ce">CE</button>
+        <button class="btn btn-danger form-control" id="btn_clr">C</button>
+        <button class="btn btn-outline-primary form-control" id="btn_plusminus">±</button>
+        <button class="btn btn-outline-primary form-control" id="btn_sqrt">√</button>
+
+        <button class="btn btn-secondary form-control" id="btn_7">7</button>
+        <button class="btn btn-secondary form-control" id="btn_8">8</button>
+        <button class="btn btn-secondary form-control" id="btn_9">9</button>
+        <button class="btn btn-outline-primary form-control" id="btn_divide">/</button>
+        <button class="btn btn-outline-primary form-control" id="btn_percent">%</button>
+
+        <button class="btn btn-secondary form-control" id="btn_4">4</button>
+        <button class="btn btn-secondary form-control" id="btn_5">5</button>
+        <button class="btn btn-secondary form-control" id="btn_6">6</button>
+        <button class="btn btn-outline-primary form-control" id="btn_multiply">*</button>
+        <button class="btn btn-outline-primary form-control" id="btn_revert">1/x</button>
+
+        <button class="btn btn-secondary form-control" id="btn_1">1</button>
+        <button class="btn btn-secondary form-control" id="btn_2">2</button>
+        <button class="btn btn-secondary form-control" id="btn_3">3</button>
+        <button class="btn btn-outline-primary form-control" id="btn_minus">-</button>
+        <button class="btn btn-outline-primary form-control" id="btn_sum">+</button>
+
+        <button class="btn btn-secondary form-control" id="btn_0">0</button>
+        <button class="btn btn-secondary form-control" id="btn_dot">.</button>
+        <button class="btn btn-primary form-control" id="btn_calc">=</button>
+
     </div>
-</div>
-<script src="script.js"></script>
+
+
+
+
+
+    <script src="script.js"></script>
+</center>
 </body>
+
 </html>

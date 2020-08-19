@@ -3,11 +3,54 @@ let operation = null;
 let memory = 0;
 
 const inputWindow = document.getElementById('inputWindow');
+const memoryWindow = document.getElementById('memoryWindow');
+
 
 document.getElementById('btn_sum').addEventListener('click', function () {
     lastOperand = parseFloat(inputWindow.value);
-    operation = null;
+    operation = 'sum';
     inputWindow.value = '0';
+})
+
+document.getElementById('btn_minus').addEventListener('click', function () {
+    lastOperand = parseFloat(inputWindow.value);
+    operation = 'minus';
+    inputWindow.value = '0';
+})
+
+document.getElementById('btn_multiply').addEventListener('click', function () {
+    lastOperand = parseFloat(inputWindow.value);
+    operation = 'miltiply';
+    inputWindow.value = '0';
+})
+
+document.getElementById('btn_divide').addEventListener('click', function () {
+    lastOperand = parseFloat(inputWindow.value);
+    operation = 'divide';
+    inputWindow.value = '0';
+})
+
+document.getElementById('btn_calc').addEventListener('click', function () {
+    if(operation == 'sum') {
+        const secondOperand = parseFloat(inputWindow.value);
+        inputWindow.value = lastOperand + secondOperand;
+        lastOperand = secondOperand;
+    }
+    if(operation == 'minus') {
+        const secondOperand = parseFloat(inputWindow.value);
+        inputWindow.value = lastOperand - secondOperand;
+        lastOperand = secondOperand;
+    }
+    if(operation == 'miltiply') {
+        const secondOperand = parseFloat(inputWindow.value);
+        inputWindow.value = lastOperand * secondOperand;
+        lastOperand = secondOperand;
+    }
+    if(operation == 'divide') {
+        const secondOperand = parseFloat(inputWindow.value);
+        inputWindow.value = lastOperand / secondOperand;
+        lastOperand = secondOperand;
+    }
 })
 
 document.getElementById('btn_plusminus').addEventListener('click', function () {
@@ -39,6 +82,7 @@ document.getElementById('btn_ce').addEventListener('click', function () {
 
 document.getElementById('btn_mc').addEventListener('click', function () {
     memory = 0;
+    memoryWindow.value = "";
 })
 
 document.getElementById('btn_mr').addEventListener('click', function () {
@@ -47,10 +91,12 @@ document.getElementById('btn_mr').addEventListener('click', function () {
 
 document.getElementById('btn_ms').addEventListener('click', function () {
     memory = parseFloat(inputWindow.value);
+    memoryWindow.value = "M";
 })
 
 document.getElementById('btn_mplus').addEventListener('click', function () {
     memory += parseFloat(inputWindow.value);
+    memoryWindow.value = "M";
 })
 
 document.getElementById('btn_mminus').addEventListener('click', function () {
@@ -68,9 +114,9 @@ document.getElementById('btn_percent').addEventListener('click', function () {
 })
 
 document.getElementById('btn_backspace').addEventListener('click', function () {
-    lastOperand = inputWindow.value;
     inputWindow.value = inputWindow.value.substring(0, inputWindow.value.length - 1);
 })
+
 
 document.getElementById('btn_1').addEventListener('click', function () {
     if(inputWindow.value == '0') inputWindow.value = '';
