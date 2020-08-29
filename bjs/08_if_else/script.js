@@ -1,3 +1,83 @@
+function convertToText(numberToGetText) {
+    numberAsText = "";
+    if (numberToGetText == 0) {
+        numberAsText = "ноль";
+    } else {
+        hundreds = Math.floor((Math.abs(numberToGetText) % 1000) / 100);
+        tens = Math.floor((Math.abs(numberToGetText) % 100) / 10);
+        integers = Math.floor(Math.abs(numberToGetText) % 10);
+        if (tens == 1) {
+            tens = 0;
+            integers += 10;
+        }
+        console.log(`hundreds ${hundreds}, tens ${tens}, ints ${integers}`);
+        numberAsText += hundredsBase[hundreds];
+        numberAsText += tensBase[tens];
+        numberAsText += integersBase[integers];
+    }
+    if (numberToGetText < 0) {
+        numberAsText = "минус " + numberAsText;
+    }
+    numberAsText = (numberAsText.length > 20) ? numberToGetText : numberAsText;
+    console.log("Число в текст: " + numberAsText);
+    return numberAsText;
+}
+
+function lessOrOverClick(button) {
+    console.log(`${button} click, maxValue= ${maxValue}, minvalue=${minValue}, ordernumber= ${orderNumber}, 'answerNumber = ${answerNumber} `);
+    if (!gameRun) {
+        alert("Начни игру заново!");
+        return;
+    }
+    if (maxValue - minValue < 2) {
+        let answerPhrase = `Ваше число больше ${minValue}, но меньше ${maxValue}!`;
+        answerPhrase += (Math.random() > 0.5) ? ` Cтранно...` : ` Я сдаюсь..\n\u{1F92F}`;
+        answerField.innerText = answerPhrase;
+        gameRun = false;
+        return;
+    }
+    if (orderNumber == maxOrder) {
+        answerField.innerText = `Попытки закончились! Я проиграл...`;
+        gameRun = false;
+        return;
+    }
+
+    if (button == "btnOver") {
+        minValue = answerNumber;
+    } else if (button == "btnLess") {
+        maxValue = answerNumber;
+    }
+    answerNumber = Math.floor((minValue + maxValue) / 2);
+    orderNumber++;
+    console.log(`New answer: ${answerNumber}, try #${orderNumber}`);
+    orderNumberField.innerText = orderNumber;
+
+    numberAsText = convertToText(answerNumber);
+
+    let answerPhrase = ``;
+    let distance = maxValue - minValue;
+    if (distance > 5) {
+        answerPhrase = `Ваше число ${numberAsText}?`;
+    } else if (distance > 2) {
+        answerPhrase = `Скоро угадаю... Это ${numberAsText}?`;
+    } else {
+        answerPhrase = `Точно! Это ${numberAsText}!`;
+    }
+    answerField.innerText = answerPhrase;
+    console.log(`end ${button}, maxValue= ${maxValue}, minvalue=${minValue}, ordernumber= ${orderNumber}, 'answerNumber = ${answerNumber} `);
+}
+
+function startOrReloadGame() {
+    answerNumber = minValue + Math.floor(Math.round(Math.random() * (maxValue - minValue)));
+    orderNumber = 1;
+    console.log(`New answer: ${answerNumber}, try #${orderNumber}`);
+    gameRun = true;
+    orderNumberField.innerText = orderNumber;
+
+    numberAsText = convertToText(answerNumber);
+    answerField.innerText = `Вы загадали число ${numberAsText}?`;
+}
+
 const hundredsBase = {
     0: '',
     1: 'сто ',
@@ -92,45 +172,10 @@ document.getElementById('btnOk').addEventListener('click', function () {
 
     console.log(`start values loaded, maxValue= ${maxValue}, minvalue=${minValue}, ordernumber= ${orderNumber}`);
 
-    //поменял логику на random, так как иначе бот получается предсказуемый и его легко победить
-    answerNumber = minValue + Math.floor(Math.round(Math.random() * (maxValue - minValue)));
-    orderNumber = 1;
-    console.log(`New answer: ${answerNumber}, try #${orderNumber}`);
-    gameRun = true;
-    orderNumberField.innerText = orderNumber;
-
-
-    ////////////function get text by number
-    numberToGetText = answerNumber;
-    numberAsText = "";
-    if (numberToGetText == 0) {
-        numberAsText = "ноль";
-    } else {
-        hundreds = Math.floor((Math.abs(numberToGetText) % 1000) / 100);
-        tens = Math.floor((Math.abs(numberToGetText) % 100) / 10);
-        integers = Math.floor(Math.abs(numberToGetText) % 10);
-        if (tens == 1) {
-            tens = 0;
-            integers += 10;
-        }
-        console.log(`hundreds ${hundreds}, tens ${tens}, ints ${integers}`);
-        numberAsText += hundredsBase[hundreds];
-        numberAsText += tensBase[tens];
-        numberAsText += integersBase[integers];
-    }
-    if (numberToGetText < 0) {
-        numberAsText = "минус " + numberAsText;
-    }
-    numberAsText = (numberAsText.length > 20) ? numberToGetText : numberAsText;
-    console.log("Число в текст: " + numberAsText);
-    ////////////
-
-    answerField.innerText = `Вы загадали число ${numberAsText}?`;
+    startOrReloadGame();
 
     console.log('btnOk success');
 })
-
-
 
 document.getElementById('btnRetry').addEventListener('click', function () {
     console.log('game reloading');
@@ -139,174 +184,16 @@ document.getElementById('btnRetry').addEventListener('click', function () {
     minValue = minValueDefault;
     maxValue = maxValueDefault;
 
-    answerNumber = minValue + Math.floor(Math.round(Math.random() * (maxValue - minValue)));
-    orderNumber = 1;
-    console.log(`New answer: ${answerNumber}, try #${orderNumber}`);
-    gameRun = true;
-    orderNumberField.innerText = orderNumber;
-
-
-    ////////////function get text by number
-    numberToGetText = answerNumber;
-    numberAsText = "";
-    if (numberToGetText == 0) {
-        numberAsText = "ноль";
-    } else {
-        hundreds = Math.floor((Math.abs(numberToGetText) % 1000) / 100);
-        tens = Math.floor((Math.abs(numberToGetText) % 100) / 10);
-        integers = Math.floor(Math.abs(numberToGetText) % 10);
-        if (tens == 1) {
-            tens = 0;
-            integers += 10;
-        }
-        console.log(`hundreds ${hundreds}, tens ${tens}, ints ${integers}`);
-        numberAsText += hundredsBase[hundreds];
-        numberAsText += tensBase[tens];
-        numberAsText += integersBase[integers];
-    }
-    if (numberToGetText < 0) {
-        numberAsText = "минус " + numberAsText;
-    }
-    numberAsText = (numberAsText.length > 20) ? numberToGetText : numberAsText;
-    console.log("Число в текст: " + numberAsText);
-    ////////////
-
-    answerField.innerText = `Вы загадали число ${numberAsText}?`;
-
-    console.log(`reloaded, maxValue= ${maxValue}, minvalue=${minValue}, ordernumber= ${orderNumber}, 'answerNumber = ${answerNumber} `);
+    startOrReloadGame();
 })
 
 document.getElementById('btnOver').addEventListener('click', function () {
-    console.log(`btnOver click, maxValue= ${maxValue}, minvalue=${minValue}, ordernumber= ${orderNumber}, 'answerNumber = ${answerNumber} `);
-    if (!gameRun) {
-        alert("Начни игру заново!");
-        return;
-    }
-    if (maxValue - minValue < 2) {
-        let answerPhrase = `Ваше число больше ${minValue}, но меньше ${maxValue}!`;
-        answerPhrase += (Math.random() > 0.5) ? ` Cтранно...` : ` Я сдаюсь..\n\u{1F92F}`;
-        answerField.innerText = answerPhrase;
-        gameRun = false;
-        return;
-    }
-    if (orderNumber == maxOrder) {
-        answerField.innerText = `Попытки закончились! Я проиграл...`;
-        gameRun = false;
-        return;
-    }
-
-    minValue = answerNumber + 1;
-    answerNumber = Math.floor((minValue + maxValue) / 2);
-    orderNumber++;
-    console.log(`New answer: ${answerNumber}, try #${orderNumber}`);
-    orderNumberField.innerText = orderNumber;
-
-    ////////////function get text by number
-    numberToGetText = answerNumber;
-    numberAsText = "";
-    if (numberToGetText == 0) {
-        numberAsText = "ноль";
-    } else {
-        hundreds = Math.floor((Math.abs(numberToGetText) % 1000) / 100);
-        tens = Math.floor((Math.abs(numberToGetText) % 100) / 10);
-        integers = Math.floor(Math.abs(numberToGetText) % 10);
-        if (tens == 1) {
-            tens = 0;
-            integers += 10;
-        }
-        console.log(`hundreds ${hundreds}, tens ${tens}, ints ${integers}`);
-        numberAsText += hundredsBase[hundreds];
-        numberAsText += tensBase[tens];
-        numberAsText += integersBase[integers];
-    }
-    if (numberToGetText < 0) {
-        numberAsText = "минус " + numberAsText;
-    }
-    numberAsText = (numberAsText.length > 20) ? numberToGetText : numberAsText;
-    console.log("Число в текст: " + numberAsText);
-    ////////////
-
-    let answerPhrase = ``;
-    let distance = maxValue - minValue;
-    if (distance > 5) {
-        answerPhrase = `Ваше число ${numberAsText}?`;
-    } else if (distance > 2) {
-        answerPhrase = `Скоро угадаю... Это ${numberAsText}?`;
-    } else {
-        answerPhrase = `Точно! Это ${numberAsText}!`;
-    }
-    answerField.innerText = answerPhrase;
-    console.log(`end btnOver, maxValue= ${maxValue}, minvalue=${minValue}, ordernumber= ${orderNumber}, 'answerNumber = ${answerNumber} `);
+    lessOrOverClick('btnOver');
 })
-
-
 
 document.getElementById('btnLess').addEventListener('click', function () {
-    console.log(`btnLess click, maxValue= ${maxValue}, minvalue=${minValue}, ordernumber= ${orderNumber}, 'answerNumber = ${answerNumber} `);
-    if (!gameRun) {
-        alert("Начни игру заново!");
-        return;
-    }
-    if (maxValue - minValue < 2) {
-        let answerPhrase = `Ваше число больше ${minValue}, но меньше ${maxValue}!`;
-        answerPhrase += (Math.random() > 0.5) ? ` Так не бывает!` : ` Я сдаюсь..\n\u{1F611}`;
-        answerField.innerText = answerPhrase;
-        gameRun = false;
-        return;
-    }
-    if (orderNumber == maxOrder) {
-        answerField.innerText = `Окей, ты победил!`;
-        gameRun = false;
-        return;
-    }
-
-    maxValue = answerNumber - 1;
-    answerNumber = Math.floor((minValue + maxValue) / 2);
-    orderNumber++;
-    console.log(`New answer: ${answerNumber}, try #${orderNumber}`);
-    orderNumberField.innerText = orderNumber;
-
-    ////////////function get text by number
-    numberToGetText = answerNumber;
-    numberAsText = "";
-    if (numberToGetText == 0) {
-        numberAsText = "ноль";
-    } else {
-        hundreds = Math.floor((Math.abs(numberToGetText) % 1000) / 100);
-        tens = Math.floor((Math.abs(numberToGetText) % 100) / 10);
-        integers = Math.floor(Math.abs(numberToGetText) % 10);
-        if (tens == 1) {
-            tens = 0;
-            integers += 10;
-        }
-        console.log(`hundreds ${hundreds}, tens ${tens}, ints ${integers}`);
-        numberAsText += hundredsBase[hundreds];
-        numberAsText += tensBase[tens];
-        numberAsText += integersBase[integers];
-    }
-    if (numberToGetText < 0) {
-        numberAsText = "минус " + numberAsText;
-    }
-    numberAsText = (numberAsText.length > 20) ? numberToGetText : numberAsText;
-    console.log("Число в текст: " + numberAsText);
-    ////////////
-
-    let answerPhrase = ``;
-    let distance = maxValue - minValue;
-    if (distance > 5) {
-        answerPhrase = `Так, посмотрим... Это ${numberAsText}?`;
-    } else if (distance > 2) {
-        answerPhrase = `Я уже близко! Это ${numberAsText}?`;
-    } else {
-        answerPhrase = `Точно! Это ${numberAsText}!`;
-    }
-    answerField.innerText = answerPhrase;
-    console.log(`end btnLess, maxValue= ${maxValue}, minvalue=${minValue}, ordernumber= ${orderNumber}, 'answerNumber = ${answerNumber} `);
-
+    lessOrOverClick('btnLess');
 })
-
-
-
 
 document.getElementById('btnEqual').addEventListener('click', function () {
     if (!gameRun) {
