@@ -1,70 +1,81 @@
-const personGenerator = {
-    surnameJson: `{  
-        "count": 15,
-        "list": {
-            "id_1": "Иванов",
-            "id_2": "Смирнов",
-            "id_3": "Кузнецов",
-            "id_4": "Васильев",
-            "id_5": "Петров",
-            "id_6": "Михайлов",
-            "id_7": "Новиков",
-            "id_8": "Федоров",
-            "id_9": "Кравцов",
-            "id_10": "Николаев",
-            "id_11": "Семёнов",
-            "id_12": "Славин",
-            "id_13": "Степанов",
-            "id_14": "Павлов",
-            "id_15": "Александров",
-            "id_16": "Морозов"
-        }
-    }`,
-    firstNameMaleJson: `{
-        "count": 10,
-        "list": {     
-            "id_1": "Александр",
-            "id_2": "Максим",
-            "id_3": "Иван",
-            "id_4": "Артем",
-            "id_5": "Дмитрий",
-            "id_6": "Никита",
-            "id_7": "Михаил",
-            "id_8": "Даниил",
-            "id_9": "Егор",
-            "id_10": "Андрей"
-        }
-    }`,
+/*
+let maleNames = [
+    'Евгений',
+    'Денис',
+    'Антон'
+];
 
-    GENDER_MALE: 'Мужчина',
-    GENDER_FEMALE: 'Женщина',
+let femaleNames = [
+    'Анастасия',
+    'Светлана',
+    'Наталья',
+    'Екатерина'
+];
 
-    randomIntNumber: (max = 1, min = 0) => Math.floor(Math.random() * (max - min + 1) + min),
+let surnames = [
+    'Иванов',
+    'Петров',
+    'Сидоров'
+];
+*/
 
-    randomValue: function (json) {
-        const obj = JSON.parse(json);
-        const prop = `id_${this.randomIntNumber(obj.count, 1)}`;  // this = personGenerator
-        return obj.list[prop];
-    },
-
-    randomFirstName: function() {
-
-        return this.randomValue(this.firstNameMaleJson);
-
-    },
+var personsJson = '{"maleNames": ["Евгений", "Денис", "Антон"],"femaleNames": ["Анастасия","Екатерина", "Светлана"],"surnames": ["Иванов","Петров","Сидоров"]}';
 
 
-     randomSurname: function() {
-
-        return this.randomValue(this.surnameJson);
-
-    },
+var personsData;
 
 
-    getPerson: function () {
-        this.person = {};
-        // this.person.gender = this.randomGender();
-        this.person.firstName = this.randomFirstName();
-        return this.person;
+function randomIntNumber(min, max) {
+    let rand = Math.floor(Math.random() * (max - min + 1) + min);
+    return rand;
+}
+
+function randomValue(arr) {
+    let number = randomIntNumber(0, arr.length - 1);
+    value = arr[number];
+    return value;
+}
+
+function randomFirstName(gender) {
+    if (gender == 'male') {
+        return randomValue(personsData.maleNames);
+    } else {
+        return randomValue(personsData.femaleNames);
     }
-};
+}
+
+function randomSurname(gender) {
+    surn = randomValue(personsData.surnames);
+    if (gender == 'female') {
+        surn += "a";
+    }
+    return surn;
+}
+
+function randomGender() {
+    let number = randomIntNumber(1, 2);
+    if (number == 1) {
+        return 'male';
+    } else {
+        return 'female';
+    }
+}
+
+
+function getPerson() {
+    personsData = JSON.parse(personsJson);
+
+    person = {
+        gender: randomGender()
+    };
+    if (person.gender == 'male') {
+        person.genderTitle = 'мужчина';
+    } else {
+        person.genderTitle = 'женщина';
+    }
+    person.firstName = randomFirstName(person.gender);
+    person.surname = randomSurname(person.gender);
+    person.year = randomIntNumber(1900, 2020);
+    return this.person;
+}
+
